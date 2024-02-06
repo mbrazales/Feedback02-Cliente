@@ -1,0 +1,34 @@
+body {
+    margin:0;
+    padding: 0;
+    text-align: center;
+}
+
+h1 {
+
+    font-size: 20px !important;
+}
+
+.contenedor-imagen {
+
+    max-width: 350px; /* Ancho máximo del contenedor de imágenes */
+    margin: 0 auto; /* Centrar el contenedor en la página */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.contenedor-imagen img {
+    width: calc(20% - 10px); /* 20% del ancho del contenedor, menos el espacio entre imágenes */
+    margin: 5px; /* Espacio entre imágenes */
+    max-width: 100%; /* La imagen no excederá el ancho del contenedor */
+    height: auto; /* La altura se ajustará automáticamente según el ancho */
+}
+
+.btn-sm {
+    font-size: 7px !important;
+}
+
+#fileInput {
+    font-size: 7px;
+}
+

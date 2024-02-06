@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Feedback02</title>
+</head>
+
+<!-- -->
+<body>
+    <h1 class="text-info bg-dark">GALERIA DE JUGADORES</h1>
+
+    <div>
+        <table>
+            <!-- Creamos la tabla para mostrar el contenido de las imágenes de los jugadores-->
+            <!--lo importante es el ID del div -->
+            <div class="contenedor-imagen border border-5 p-3 mb-2 bg-secondary text-white shadow-lg p-3 mb-5 bg-body rounded" id="imagenContainer"></div>
+                <div class="cajaBotones" style="margin-top: -50px;">
+
+                    <!-- Creamos los diferentes botones con el evento onclick y su función correspondiente-->
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="impares()">Impares-TOTYS</button>
+                    <button type="button" class="btn btn-outline-success btn-sm" onclick="pares()">Pares-ICONOS</button>
+                    <button type="button" class="btn btn-outline-info btn-sm" onclick="reset()">Todas</button>
+                    <!--Este evento es un tanto especial porque queremos pushear una imagen de nuestro PC e incluirlo a nuestro array de imagenes -->
+                    <div>
+                        <input type="file" id="fileInput" accept="image/*">
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="cargar()">Cargar</button>
+                    </div>
+
+                </div>
+
+        </table>
+
+    </div>
+
+    
+    <script>
+        /***************************************************/
+        /***********VAMOS CON LA MAGIA*****************/
+        /***************************************************/
+
+        //Seleccionamos el contenedor de las imagenes de HTML por su ID y lo metemos en una variable.
+        let imagenContainer = document.getElementById("imagenContainer");
+
+        //Definimos nuestra array con la ruta de las imagenes de los jugadores.
+        let jugadores  = ["../IMG/imagen1.png","../IMG/imagen2.png","../IMG/imagen3.png","../IMG/imagen4.png","../IMG/imagen5.png","../IMG/imagen6.png","../IMG/imagen7.png","../IMG/imagen8.png","../IMG/imagen9.png","../IMG/imagen10.png","../IMG/imagen11.png","../IMG/imagen12.png","../IMG/imagen13.png","../IMG/imagen14.png","../IMG/imagen15.png"];
+
+        /***************************************************/
+        /***********FUNCIÓN IMPRIMIR IMAGENES*****************/
+        /***************************************************/
+
+        //Función para imprimir las imágenes que tenemos en nuestro array jugadores
+        function imprimirImagenes() {
+
+        // Recorre el array e imprime cada imagen
+            for (let i = 0; i < jugadores.length; i++) {
+                
+                {
+                    //Esta línea crea un nuevo elemento de imagen (<img>) en el documento HTML utilizando el método document.createElement(). Este elemento de imagen se almacena en la variable imagenElement.
+                    let imagenElement = document.createElement("img");
+
+                    //Aquí se asigna la propiedad src del elemento de imagen (imagenElement) con el valor almacenado en la posición i del array jugadores.
+                    imagenElement.src = jugadores[i];
+
+                    //Agregamos el elemento de imagen (imagenElement) como un hijo del elemento con el id imagenContainer. Esto significa que la imagen se insertará dentro del elemento con el id imagenContainer en el documento HTML.
+                    imagenContainer.appendChild(imagenElement);
+                }
+            }
+        }
+
+        imprimirImagenes();
+
+        /***************************************************/
+        /***********FUNCIÓN IMPRIMIR IMPARES*****************/
+        /***************************************************/
+
+        function impares() {
+
+        // Tenemos que filtrar las imágenes impares.
+        // Con el método filter() en el array de jugadores para crear un nuevo array que cumplan la condición através de una función anónima donde pillamos
+        // la url de cada imagen y trabajamos con ella. ejemplo : https://www.ejemplo.com/imagen1.jpg
+        // Tenemos que llegar al digito del nombre de la imagen para trabajar con ella en el ejemplo 1, asi con todas.
+
+        let imparesArray = jugadores.filter(function(url) {
+
+            // Extraer el número del nombre de la imagen 
+            let numero = parseInt(url.match(/\d+/)[0]);
+
+            // Verificar si el número es impar si su resto No es 0
+            return numero % 2 !== 0;
+        });
+
+        // Limpiar el contenedor de imágenes antes de imprimir las imágenes impares
+        imagenContainer.innerHTML = "";
+
+            // Recorrer el array de imágenes impares y agregarlas al contenedor, esta explicado más detallado en la función arriba llamada imprimirImagen().
+            for (let i = 0; i < imparesArray.length; i++) {
+                let imagenElement = document.createElement("img");
+                imagenElement.src = imparesArray[i];
+                imagenContainer.appendChild(imagenElement);
+            }
+        }
+            
+    
+        /***************************************************/
+        /***********FUNCIÓN IMPRIMIR PARES*****************/
+        /***************************************************/
+
+        //Explicación detallada arriba, función Impares().
+
+        function pares() {
+            // Filtrar las imágenes pares y almacenarlas en un nuevo array
+            let imparesArray = jugadores.filter(function(url) {
+
+                // Extraer el número del nombre de la imagen
+
+                let numero = parseInt(url.match(/\d+/)[0]);
+                // Verificar si el número es par si su resto es igual a 0.
+                return numero % 2 == 0;
+            });
+
+            // Limpiar el contenedor de imágenes antes de imprimir las imágenes impares
+            imagenContainer.innerHTML = "";
+
+            // Recorrer el array de imágenes pares y agregarlas al contenedor
+            for (let i = 0; i < imparesArray.length; i++) {
+                let imagenElement = document.createElement("img");
+                imagenElement.src = imparesArray[i];
+                imagenContainer.appendChild(imagenElement);
+            }
+        }
+
+        /***************************************************/
+        /***********FUNCIÓN RESETAR (LIMPIAMOS Y DESPÚES IMPRIMIMOS)*****************/
+        /***************************************************/
+
+        function reset() {
+            imagenContainer.innerHTML = "";
+            imprimirImagenes();
+    }
+
+        /***************************************************/
+        /***********FUNCIÓN CARGAR NUEVA IMAGEN*****************/
+        /***************************************************/
+        
+
+
+        function cargar() {
+
+            // Obtenemos el elemento de entrada de archivo del documento HTML con el ID "fileInput" y lo almacena en la variable fileInput.
+            let fileInput = document.getElementById('fileInput');
+
+            // Obtenemos el primer archivo seleccionado por el usuario en el elemento de entrada de archivo y lo almacena en la variable file.
+            let file = fileInput.files[0];
+            
+            // Esto comprueba si se seleccionó un archivo. Si hay un archivo seleccionado, el código dentro del bloque if se ejecuta; de lo contrario, se muestra una alerta pidiendo al usuario que seleccione un archivo.
+            if (file) {
+
+                //Se crea una nueva instancia de FileReader, que es un objeto que permite leer archivos del sistema de archivos del usuario como datos URL.
+                let reader = new FileReader();
+
+                //Esto inicia la lectura del archivo seleccionado como datos URL.
+                reader.readAsDataURL(file);
+
+                //Esto establece un controlador de eventos que se ejecutará cuando la lectura del archivo esté completa. Dentro de esta función, el resultado de la lectura del archivo se agrega al arreglo jugadores utilizando push(), y luego se llama a la función reset().
+                reader.onload = function () {
+                    jugadores.push(reader.result);
+                    reset();
+                };
+            } else {
+                alert('Por favor selecciona un archivo.');
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
